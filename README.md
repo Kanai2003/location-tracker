@@ -25,9 +25,9 @@ Ensure you have the following installed on your system:
 git clone https://github.com/Kanai2003/location-tracker
 cd location-tracker/server
 ```
-**Step 2: Install Docker in your local machine**
+**Step 2: Install Docker in your local machine(If you don't have docker installed)**
 
-**Step 3: Start the Backend with Docker(If you don't have docker installed)**
+**Step 3: Start the Backend with Docker**
 
 
 Run the following command to start all services (Redis, PostgreSQL, MongoDB, and the Node.js backend):
