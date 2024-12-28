@@ -25,6 +25,6 @@ import healthRoutes from "./routes/healthRoutes.js";
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/location", locationRoutes);
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/health", healthRoutes)
+app.use("/api/v1/health", healthRoutes);
 
 export { app };

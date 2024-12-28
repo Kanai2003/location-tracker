@@ -17,7 +17,7 @@ export const registerUser = async (req, res) => {
 
     const result = await pgPoll.query(query, values);
 
-    if(!result){
+    if (!result) {
       return res.status(400).send("Error registering user");
     }
 
@@ -52,40 +52,16 @@ export const loginUser = async (req, res) => {
       { expiresIn: "1d" },
     );
 
-    if(!token){
+    if (!token) {
       return res.status(400).send("Error generating token");
     }
 
-    res.cookie('token', token).header("Authorization", token).send({ user, token });
+    res
+      .cookie("token", token)
+      .header("Authorization", token)
+      .send({ user, token });
   } catch (error) {
     console.log(">>>>> loginUser: error : ", error);
     res.status(500).send("Error logging in");
-  }
-};
-
-// this is just for testing purposes
-export const registerAdminUser = async (req, res) => {
-  const { name, email, password } = req.body;
-  if (!name || !email || !password) {
-    return res.status(400).send("All fields are required");
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 10);
-
-  try {
-    const query =
-      "INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING *";
-    const values = [name, email, hashedPassword, 'admin'];
-
-    const result = await pgPoll.query(query, values);
-
-    if(!result){
-      return res.status(400).send("Error registering Admin user");
-    }
-
-    res.status(201).send(result.rows[0]);
-  } catch (error) {
-    console.log(">>>>> registerAdminUser: error : ", error);
-    res.status(500).send("Error registering user");
   }
 };
