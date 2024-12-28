@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      - MONGO_URI=mongodb://mongodb:27017/mydatabase
+      - REDIS_URL=redis://redis:6379
+      - POSTGRES_URI=postgresql://kanailal:kanai@2003@postgres:5432/mydatabase
+      - JWT_SECRET=NJdyBArodYJYiIipkJixjfbYthfdDp
+    depends_on:
+      - postgres
+      - redis
+      - mongodb
+    restart: always
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      POSTGRES_USER: kanailal
+      POSTGRES_PASSWORD: kanai@2003
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: always
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    restart: always
+
+volumes:
+  postgres_data:
+  mongo-data:
+  redis_data:
